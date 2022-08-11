@@ -1,38 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 
-// For testing
-//public class MCTS : Planner
-//{
-//    public override Action SelectAction(State s)
-//    {
-//        if (s.number == 0)
-//            return Action.Goal1;
-//        if(s.number == 1)
-//            return Action.Goal2;
-//        return Action.No_Op;
-//    }
-//}
 
 public class MCTS : Planner_Interface
 {
     public float realReturn;
     public static List<Node> Nodes;
 
-    //bool alreadyPlanning;
     NMRDP_Agent agent;
-    //Node currentRootNode;
     System.Random rand;
     List<Action> A_list;
 
-    static float duration1;
-    static float duration2;
-    static float duration3;
-    static float duration4;
-    static float duration5;
-    
     static readonly float gamma = Parameters.discountFactor;
-    //public static int I; // iterations per action selection
 
 
     public MCTS(NMRDP_Agent _agent)
@@ -128,10 +106,6 @@ public class MCTS : Planner_Interface
             State ss = agent.GetNextState(a, s);
             // Get reference to next active rmNode
             rmNode newActiveRMNode = agent.GetNextActiveRMNode(a, ss, n.activeRMNode);
-            //rmNode newActiveRMNode = new rmNode(agent.GetNextActiveRMNode(a, ss, n.activeRMNode));
-            //UnityEngine.Debug.Log("currentActiveRMNode: " + n.activeRMNode.name);
-            //UnityEngine.Debug.Log("s, a, ss: " + s.name + ", " + a + ", " + ss.name);
-            //UnityEngine.Debug.Log("newActiveRMNode: " + newActiveRMNode.name);
             // Generate a new node
             nn = new Node(ss, newActiveRMNode);
             // Add it to the children of the current node
@@ -143,8 +117,6 @@ public class MCTS : Planner_Interface
         {
             // Select action to follow down (up?) the tree, using the UCT method
             a = UCT(n);
-            // Select next state ; WHY?
-            //ss = agent.GetNextState(a, s);
             // Find child node reached via selected action
             nn = n.children[a];
             // Continue with tree-traversal stage
@@ -162,21 +134,16 @@ public class MCTS : Planner_Interface
         // Update the average estimate for performing action a in s node n
         n.Q[a] += (q - n.Q[a]) / n.N[a];
 
-        //UnityEngine.Debug.Log("n.Q[a]: " + n.Q[a]);
-        //UnityEngine.Debug.Log("n.N[a]: " + n.N[a]);
-        //UnityEngine.Debug.Log("q: " + q);
-        
         return q;
     }
     
     
     public Action SelectAction(State state, Agent agentParam = null)
     {
-        int I = Parameters.first_I;
+        int I = Parameters.I;
         int D = Parameters.maximumNuofActions; // larger D might be detrimental, because w/ long enough episodes, the goal can be reached no matter the first action
 
         Node node = new Node(state, agent.RewardMachine.ActiveNode);
-        //UnityEngine.Debug.Log("agent.RewardMachine.ActiveNode.name: " + agent.RewardMachine.ActiveNode.name);
 
         //nuof_nodes_gened = 0;
         int i = 0;
@@ -191,7 +158,6 @@ public class MCTS : Planner_Interface
         float maxValue = -float.MaxValue;
         foreach (Action a in Agent.Actions)
         {
-            //UnityEngine.Debug.Log("node.Q[" + a.ToString() + "]:" + node.Q[a]);
             if (node.Q[a] > maxValue)
             {
                 maxValue = node.Q[a];

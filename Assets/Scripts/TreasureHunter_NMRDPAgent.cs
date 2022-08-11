@@ -15,8 +15,6 @@ public class TreasureHunter_NMRDP_Agent : NMRDP_Agent
 
     public override RewardMachine DefineRewardMachine()
     {
-        //throw new NotImplementedException();
-
         RewardMachine rm = new(Observations);
 
         var startPos = new rmNode("startPos");
@@ -43,20 +41,6 @@ public class TreasureHunter_NMRDP_Agent : NMRDP_Agent
         rm.AddNode(treasSold);
 
         rm.ActiveNode = startPos;
-
-        //rm.AddEdge(startPos, townSquare, Observation.AtTownSqr, -1f);
-        //rm.AddEdge(townSquare, haveMap, Observation.HaveMap, 1f);
-        //rm.AddEdge(haveMap, atEquip, Observation.AtEquipment, -1f);
-        //rm.AddEdge(atEquip, haveEquip, Observation.HaveEquipment, -10f);
-        //rm.AddEdge(haveMap, atGuide, Observation.AtGuide, -1f);
-        //rm.AddEdge(atGuide, haveGuide, Observation.HaveGuide, -12f);
-        //rm.AddEdge(haveEquip, atTreas, Observation.AtTreasure, -1f);
-        //rm.AddEdge(haveGuide, atTreas, Observation.AtTreasure, -1f);
-        //rm.AddEdge(atTreas, haveTreas, Observation.HaveTreasure, 20f);
-        //rm.AddEdge(haveTreas, atJewlr, Observation.AtJeweler, -1f);
-        //rm.AddEdge(atJewlr, treasSold, Observation.TreasureSold, 1000f);
-        //rm.AddEdge(treasSold, atEquip, Observation.AtEquipment, -1f);
-        //rm.AddEdge(treasSold, atGuide, Observation.AtGuide, -1f);
 
         rm.AddEdge(startPos, townSquare, Observation.AtTownSqr, 1f);
         rm.AddEdge(townSquare, haveMap, Observation.HaveMap, 1f);
@@ -91,9 +75,6 @@ public class TreasureHunter_NMRDP_Agent : NMRDP_Agent
 
     public override void InitializeAgentState()
     {
-        //throw new NotImplementedException();
-
-        // Example definitoin
         CurrentState = States[0];
     }
 
@@ -106,8 +87,6 @@ public class TreasureHunter_NMRDP_Agent : NMRDP_Agent
     
     public override float TransitionFunction(State stateFrom, Action action, State stateTo)
     {
-        //throw new NotImplementedException();
-
         if (stateFrom.name == "startPos")
         {
             if (action == Action.GotoTownSqr)
@@ -208,7 +187,6 @@ public class TreasureHunter_NMRDP_Agent : NMRDP_Agent
     }
 
     
-
     // Return the observation perceived in (next state) s after performing a
     public override Observation ObservationFunction(Action a, State s)
     {

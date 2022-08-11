@@ -1,9 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
+
 
 public class AgentController : MonoBehaviour
 {
@@ -13,10 +11,9 @@ public class AgentController : MonoBehaviour
     public GameObject jewlr;
     public GameObject treasr;
     public GameObject actionStatus;
-    TextMeshPro actionStatusText;
     public TreasureHunter_NMRDP_Agent nmrdpAgent;
-    //public Test_NMRDP_Agent nmrdpAgent;
 
+    TextMeshPro actionStatusText;
     enum Phase { Planning, Execution, Updating }
     Phase phase;
     NavMeshAgent navMeshAgent;
@@ -28,7 +25,6 @@ public class AgentController : MonoBehaviour
     {
         navMeshAgent = GetComponent<NavMeshAgent>();
 
-        //navMeshAgent.SetDestination(target1.transform.position);
         navMeshAgent.stoppingDistance = 1.9f;
 
         nmrdpAgent = new TreasureHunter_NMRDP_Agent();
@@ -40,14 +36,6 @@ public class AgentController : MonoBehaviour
         waitingToGetPath = false;
 
         actionStatusText = actionStatus.GetComponent<TextMeshPro>();
-
-        // For testing
-        //rmNode activeNode = nmrdpAgent.RewardMachine.ActiveNode;
-        //Debug.Log("Active node: " + activeNode.name);
-        //foreach (Action act in Agent.Actions)
-        //    foreach (State stt in Agent.States)
-        //        Debug.Log("ImmediateReward for " + act + ", " + stt.name + ": " + nmrdpAgent.ImmediateReward(act, stt, activeNode));
-
     }
 
 
@@ -56,18 +44,17 @@ public class AgentController : MonoBehaviour
         if(phase == Phase.Planning)
         {
             //Debug.Log("----------------------------------");
-            //Debug.Log("Entered Planning Phse");
+            //Debug.Log("Entered Planning Phase");
             //Debug.Log("CurrentState: " + nmrdpAgent.CurrentState.name);
             //Debug.Log("waitingToGetPath: " + waitingToGetPath);
             //Debug.Log("alreadyPlanning: " + alreadyPlanning);
 
-            
             if (!waitingToGetPath && !alreadyPlanning)
             {
                 alreadyPlanning = true;
                 nmrdpAgent.CurrentAction = nmrdpAgent.SelectAction(nmrdpAgent.CurrentState);
-                if(nmrdpAgent.CurrentAction != null)
-                    actionStatusText.text = nmrdpAgent.CurrentAction.ToString();
+                //if(nmrdpAgent.CurrentAction != null)
+                actionStatusText.text = nmrdpAgent.CurrentAction.ToString();
                 Debug.Log("CurrentAction: " + nmrdpAgent.CurrentAction);
 
                 switch (nmrdpAgent.CurrentAction)
@@ -103,14 +90,14 @@ public class AgentController : MonoBehaviour
                     waitingToGetPath = false;
                     phase = Phase.Execution;
                     //Debug.Log("----------------------------------");
-                    //Debug.Log("Entered Execution Phse");
+                    //Debug.Log("Entered Execution Phase");
                 }
             }
             else
             {
                 phase = Phase.Execution;
                 //Debug.Log("----------------------------------");
-                //Debug.Log("Entered Execution Phse");
+                //Debug.Log("Entered Execution Phase");
             }
         }
 
@@ -119,7 +106,7 @@ public class AgentController : MonoBehaviour
             if (nmrdpAgent.isNavigationAction(nmrdpAgent.CurrentAction))
             {
                 //Debug.Log("----------------------------------");
-                //Debug.Log("Entered Execution Phse");
+                //Debug.Log("Entered Execution Phase");
                 //Debug.Log("remainingDistance: " + navMeshAgent.remainingDistance);
                 //Debug.Log("hasPath: " + navMeshAgent.hasPath);
 
@@ -160,17 +147,10 @@ public class AgentController : MonoBehaviour
         if (phase == Phase.Updating)
         {
             //Debug.Log("----------------------------------");
-            //Debug.Log("Entered Updating Phse");
+            //Debug.Log("Entered Updating Phase");
             State nextState = Environment.GetNextState(nmrdpAgent.CurrentState, nmrdpAgent.CurrentAction);
-
             Observation obs = nmrdpAgent.ObservationFunction(nmrdpAgent.CurrentAction, nextState);
-
-            //Debug.Log("CurrentState: " + nmrdpAgent.CurrentState.name + ", CurrentAction: " + nmrdpAgent.CurrentAction + ", nextState: " + nextState.name + ", Observation: " + obs);
-
             nmrdpAgent.RewardMachine.AdvanceActiveNode(obs);
-
-            //Debug.Log("New active node: " + nmrdpAgent.RewardMachine.ActiveNode.name);
-
             nmrdpAgent.CurrentState = nextState;
             phase = Phase.Planning;
         }

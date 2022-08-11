@@ -1,8 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 
+/// <summary>
+/// A node of a reward machine
+/// </summary>
 public class rmNode
 {
     public string name;
@@ -20,11 +22,19 @@ public class rmNode
         this.edges = node.edges;
     }
 
+    /// <summary>
+    /// Adds an edge going out of this node
+    /// </summary>
+    /// <param name="e">The edge to be added</param>
     public void AddEdge(rmEdge e)
     {
         edges.Add(e);
     }
 
+    /// <summary>
+    /// Removes the edge from this node
+    /// </summary>
+    /// <param name="e">The edge to be removed</param>
     public void RemoveEdge(rmEdge e)
     {
         edges.Remove(e);
@@ -32,6 +42,9 @@ public class rmNode
 }
 
 
+/// <summary>
+/// An edge of a reward machine (connecting nodes)
+/// </summary>
 public struct rmEdge
 {
     public string name;
@@ -62,8 +75,6 @@ public struct rmEdge
 
 public class RewardMachine
 {
-    //string name;
-    // Observation;
     List<Observation> observations;  // Define enum Observation in the code (and same namespace) using the reward machine,
     rmNode activeNode;
     List<rmNode> nodes;
@@ -92,23 +103,37 @@ public class RewardMachine
     // Constructor
     public RewardMachine(List<Observation> _observations, rmNode _activeNode, List<rmNode> _nodes)
     {
-        //name = _name;
         observations = _observations;
         activeNode = _activeNode;
         nodes = _nodes;
         nodes.Add(_activeNode);
     }
 
+    /// <summary>
+    /// Adds a node to the reward machine
+    /// </summary>
+    /// <param name="n">The node to be added</param>
     public void AddNode(rmNode n)
     {
         nodes.Add(n);
     }
 
+    /// <summary>
+    /// Removes the node from the reward machine
+    /// </summary>
+    /// <param name="n">The node to be removed</param>
     public void RemoveNode(rmNode n)
     {
         nodes.Remove(n);
     }
 
+    /// <summary>
+    /// Adds an edge to the reward machine
+    /// </summary>
+    /// <param name="_start">The node where the edge originates</param>
+    /// <param name="_end">The node to which the edge points</param>
+    /// <param name="_observation">The observation label for this edge</param>
+    /// <param name="_reward">The reward label for this edge</param>
     public void AddEdge(rmNode _start, rmNode _end, Observation _observation, float _reward)
     {
         Debug.Assert(nodes.Contains(_start), "The node at the start of this edge is not part of this reward machine. Nodes must be added to a machine before used when adding edges involving them");
@@ -117,6 +142,10 @@ public class RewardMachine
         _start.AddEdge(e);  // add the edge as an outgoing edge of the start node
     }
 
+    /// <summary>
+    /// Removes the edge from this reward machine
+    /// </summary>
+    /// <param name="e">The edge to be removed</param>
     public void RemoveEdge(rmEdge e)
     {
         edges.Remove(e);
@@ -130,6 +159,10 @@ public class RewardMachine
         }
     }
 
+    /// <summary>
+    /// Makes the correct node active, given the currently active node and the observation perceived
+    /// </summary>
+    /// <param name="observation">Current observation</param>
     public void AdvanceActiveNode(Observation observation)
     {
         foreach (rmEdge e in activeNode.edges)
@@ -142,6 +175,9 @@ public class RewardMachine
         }
     }
 
+    /// <summary>
+    /// The currently active node
+    /// </summary>
     public rmNode ActiveNode
     {
         get
@@ -155,6 +191,10 @@ public class RewardMachine
         }
     }
 
+    /// <summary>
+    /// Sets the currently active node
+    /// </summary>
+    /// <param name="n">The node to be made active</param>
     public void SetActiveNode(rmNode n)
     {
         if (nodes.Contains(n))

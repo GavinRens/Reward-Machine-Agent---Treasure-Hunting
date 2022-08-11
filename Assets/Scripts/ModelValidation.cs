@@ -1,7 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Use this code to validate that the implemented transition function is correct. Whenever "mass != 1f" (see below) is true, the transition function is ill-dfined.
+/// </summary>
 public class ModelValidation : MonoBehaviour
 {
     NMRDP_Agent agent;
@@ -27,11 +28,5 @@ public class ModelValidation : MonoBehaviour
 
         Debug.Log("-------- END TRANS FUNC VALIDATION --------");
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

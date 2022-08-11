@@ -10,8 +10,11 @@ public interface NMRDP_Interface
     static List<State> States { get; }  // Define class State in the code (and same namespace) instantiating this NMRDP
     RewardMachine RewardMachine { get; }
 
-    // Specify what states are in States
-    List<State> GenerateStates();
+    /// <summary>
+    /// Specify what states are in States
+    /// </summary>
+    /// <returns></returns>
+    //List<State> GenerateStates();
 
     // Define the reward machine
     RewardMachine DefineRewardMachine();

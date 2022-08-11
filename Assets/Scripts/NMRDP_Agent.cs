@@ -1,24 +1,14 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 
 
 public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
 {
     RewardMachine rewardMachine;
-    //public enum Phase { Planning, Execution, Updating}
-    //public Phase phase;
-    //public bool planningPhase;  // if the agent is not planning then it is executing an action
-    //public bool executionPhase;
     Random rand;
 
     public NMRDP_Agent() : base()
     {
         rewardMachine = DefineRewardMachine();
-        //phase = Phase.Planning;
-        //planningPhase = false;
-        //executionPhase = false;
         rand = new Random();
     }
 
@@ -57,7 +47,6 @@ public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
 
     // For NMRDP_Interface
 
-    //public RewardMachine RewardMachine{ protected get { return rewardMachine; } private set { } }
     public RewardMachine RewardMachine { get { return rewardMachine; } }
 
     public abstract RewardMachine DefineRewardMachine();
@@ -92,10 +81,7 @@ public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
     
     // For Planner_Interface
 
-    public abstract Action SelectAction(State currentState, Agent agent = null);
-
-
-    
+    public abstract Action SelectAction(State currentState, Agent agent = null);   
 }
 
 
