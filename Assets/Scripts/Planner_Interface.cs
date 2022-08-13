@@ -1,4 +1,4 @@
-
+using TreasureHunting;
 public interface Planner_Interface
 {
     /// <summary>

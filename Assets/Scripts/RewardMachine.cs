@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
-
+using TreasureHunting;
 
 /// <summary>
 /// A node of a reward machine

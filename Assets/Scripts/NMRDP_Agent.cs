@@ -1,15 +1,15 @@
-using System;
-
+//using System;
+using TreasureHunting;
 
 public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
 {
     RewardMachine rewardMachine;
-    Random rand;
+    System.Random rand;
 
     public NMRDP_Agent() : base()
     {
         rewardMachine = DefineRewardMachine();
-        rand = new Random();
+        rand = new System.Random();
     }
 
     public rmNode GetNextActiveRMNode(Action action, State state, rmNode currentActiveNode)

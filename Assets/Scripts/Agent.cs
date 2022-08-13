@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+using TreasureHunting;
 
 public abstract class Agent
 {
