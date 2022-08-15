@@ -2,8 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
-using TreasureHunting;
-
+namespace TreasureHunting
+{
     public class AgentController : MonoBehaviour
     {
         public GameObject townSqr;
@@ -163,4 +163,4 @@ using TreasureHunting;
             alreadyExecuting = false;
         }
     }
-
+}
