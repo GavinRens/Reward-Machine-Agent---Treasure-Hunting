@@ -1,5 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
+
 
 public abstract class Agent
 {
@@ -53,7 +53,7 @@ public abstract class Agent
     public static List<State> States { get { return states; } }
 
     /// <summary>
-    /// 
+    /// Returns a successor state
     /// </summary>
     /// <param name="action">The action executed</param>
     /// <param name="state">The state in which the action was executed</param>

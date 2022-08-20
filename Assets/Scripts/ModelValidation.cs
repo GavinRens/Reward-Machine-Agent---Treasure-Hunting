@@ -1,5 +1,6 @@
 using UnityEngine;
 
+
 /// <summary>
 /// Use this code to validate that the implemented transition function is correct. Whenever "mass != 1f" (see below) is true, the transition function is ill-dfined.
 /// </summary>
