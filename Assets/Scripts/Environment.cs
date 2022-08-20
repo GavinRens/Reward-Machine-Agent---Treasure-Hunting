@@ -14,7 +14,7 @@ public class Environment : MonoBehaviour
     }
 
 
-    public static State GetNextState(State currentState, Action action)
+    public static State GetRealNextState(State currentState, Action action)
     {
         if (currentState.name == "startPos")
         {
