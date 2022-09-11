@@ -149,7 +149,7 @@ using UnityEngine.AI;
                 //Debug.Log("----------------------------------");
                 //Debug.Log("Entered Updating Phase");
                 State nextState = Environment.GetRealNextState(nmrdpAgent.CurrentState, nmrdpAgent.CurrentAction);
-                Observation obs = nmrdpAgent.ObservationFunction(nmrdpAgent.CurrentAction, nextState);
+                Observation obs = nmrdpAgent.GetObservation(nmrdpAgent.CurrentAction, nextState);
                 nmrdpAgent.RewardMachine.AdvanceActiveNode(obs);
                 nmrdpAgent.CurrentState = nextState;
                 phase = Phase.Planning;

@@ -76,7 +76,8 @@ public class MCTS : Planner_Interface
         Action a = A_list[rand.Next(0, A_list.Count-1)];
         State ss = agent.GetNextState(a, s);
         float r = agent.ImmediateReward(a, ss, rmn);
-        rmNode newActiveRMNode = agent.GetNextActiveRMNode(a, ss, rmn);
+        Observation z = agent.GetObservation(a, ss);
+        rmNode newActiveRMNode = agent.GetNextActiveRMNode(z, rmn);
         return r + gamma * RollOut(ss, d - 1, newActiveRMNode);
     }
     
@@ -104,8 +105,10 @@ public class MCTS : Planner_Interface
             n.triedActs.Add(a);
             // Select next state
             State ss = agent.GetNextState(a, s);
+            // Get the observation due to 'a' and 'ss'
+            Observation z = agent.GetObservation(a, ss);
             // Get reference to next active rmNode
-            rmNode newActiveRMNode = agent.GetNextActiveRMNode(a, ss, n.activeRMNode);
+            rmNode newActiveRMNode = agent.GetNextActiveRMNode(z, n.activeRMNode);
             // Generate a new node
             nn = new Node(ss, newActiveRMNode, agent);
             // Add it to the children of the current node
