@@ -14,6 +14,13 @@ public class Environment : MonoBehaviour
     }
 
 
+    /// <summary>
+    /// The state the agent will end up in if it executes the action in the current state
+    /// This is the `ground truth', not a model of what is expected <see cref="Agent.GetNextState(Action, State)"/>
+    /// </summary>
+    /// <param name="action">An action</param>
+    /// <param name="currentState">An environment state</param>
+    /// <returns>A successor state</returns>
     public static State GetRealNextState(State currentState, Action action)
     {
         if (currentState.name == "startPos")
