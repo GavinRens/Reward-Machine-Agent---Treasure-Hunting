@@ -53,7 +53,6 @@ using UnityEngine.AI;
                 {
                     alreadyPlanning = true;
                     nmrdpAgent.CurrentAction = nmrdpAgent.SelectAction(nmrdpAgent.CurrentState);
-                    //if(nmrdpAgent.CurrentAction != null)
                     actionStatusText.text = nmrdpAgent.CurrentAction.ToString();
                     Debug.Log("CurrentAction: " + nmrdpAgent.CurrentAction);
 
@@ -110,7 +109,7 @@ using UnityEngine.AI;
                     //Debug.Log("remainingDistance: " + navMeshAgent.remainingDistance);
                     //Debug.Log("hasPath: " + navMeshAgent.hasPath);
 
-                    if (navMeshAgent.remainingDistance < Parameters.atTargetDistance)
+                    if (navMeshAgent.remainingDistance < Parameters.AT_TARGET_DISTANCE)
                     {
                         navMeshAgent.ResetPath();
                         phase = Phase.Updating;
