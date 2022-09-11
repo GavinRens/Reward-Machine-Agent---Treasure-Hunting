@@ -75,35 +75,31 @@ public struct rmEdge
 
 public class RewardMachine
 {
-    List<Observation> observations;  // Define enum Observation in the code (and same namespace) using the reward machine,
     rmNode activeNode;
     List<rmNode> nodes;
     List<rmEdge> edges;
 
 
     // Constructor
-    public RewardMachine(List<Observation> _observations)
+    public RewardMachine()
     {
         //name = _name;
-        observations = _observations;
         activeNode = new rmNode("Entry Node");
         nodes = new List<rmNode>();
         edges = new List<rmEdge>();
     }
 
     // Constructor
-    public RewardMachine(List<Observation> _observations, rmNode _activeNode)
+    public RewardMachine(rmNode _activeNode)
     {
         //name = _name;
-        observations = _observations;
         activeNode = _activeNode;
         nodes = new List<rmNode> { _activeNode };
     }
 
     // Constructor
-    public RewardMachine(List<Observation> _observations, rmNode _activeNode, List<rmNode> _nodes)
+    public RewardMachine(rmNode _activeNode, List<rmNode> _nodes)
     {
-        observations = _observations;
         activeNode = _activeNode;
         nodes = _nodes;
         nodes.Add(_activeNode);
