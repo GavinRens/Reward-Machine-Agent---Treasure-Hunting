@@ -187,7 +187,7 @@ using System.Collections.Generic;
 
 
         // Return the observation perceived in (next state) s after performing a
-        public override Observation ObservationFunction(Action a, State s)
+        public override Observation GetObservation(Action a, State s)
         {
             if (a == Action.GotoTownSqr)
                 if (s.name == "townSquare")
