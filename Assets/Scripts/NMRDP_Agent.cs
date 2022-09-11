@@ -78,7 +78,7 @@ public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
     
     // For Planner_Interface
 
-    public abstract Action SelectAction(State currentState, Agent agent = null);   
+    public abstract Action SelectAction(State currentState);   
 }
 
 

@@ -236,7 +236,7 @@ using System.Collections.Generic;
         }
 
 
-        public override Action SelectAction(State currentState, Agent agent = null)
+        public override Action SelectAction(State currentState)
         {
             return mctsPlanner.SelectAction(currentState);
         }
