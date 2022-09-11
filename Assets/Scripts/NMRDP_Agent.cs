@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+
+
 public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
 {
     RewardMachine rewardMachine;
@@ -9,11 +12,8 @@ public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
         rand = new System.Random();
     }
 
-    public rmNode GetNextActiveRMNode(Action action, State state, rmNode currentActiveNode)
-    {// Note that state is the state reached via action
-        Observation observation = ObservationFunction(action, state);
-        //UnityEngine.Debug.Log("a, s, o, rmn: " + action + ", " + state.name + ", " + observation + ", " + currentActiveNode.name);
-
+    public rmNode GetNextActiveRMNode(Observation observation, rmNode currentActiveNode)
+    {
         foreach (rmEdge e in currentActiveNode.edges)
             if (e.observation == observation)
             {
@@ -26,7 +26,7 @@ public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
     }
 
 
-    // For Agent
+    // For Agent (other methods to be implemented in final agent instance)
 
     public override State GetNextState(Action action, State state)
     {
@@ -50,11 +50,11 @@ public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
 
     public abstract float TransitionFunction(State stateFrom, Action action, State stateTo);
 
-    public abstract Observation ObservationFunction(Action a, State s);
+    public abstract Observation GetObservation(Action a, State s);
 
     public float ImmediateReward(Action action, State state)
     {// Note that state is the state reached via action
-        Observation obsrv = ObservationFunction(action, state);
+        Observation obsrv = GetObservation(action, state);
         foreach (rmEdge e in RewardMachine.ActiveNode.edges)
             if (e.observation == obsrv)
                 return e.reward;
@@ -66,7 +66,7 @@ public abstract class NMRDP_Agent : Agent, NMRDP_Interface, Planner_Interface
     // Overloaded for use in MCTS algorithm
     public float ImmediateReward(Action action, State state, rmNode activeNode)
     {// Note that state is the state reached via action
-        Observation obsrv = ObservationFunction(action, state);
+        Observation obsrv = GetObservation(action, state);
         foreach (rmEdge e in activeNode.edges)  
             if (e.observation == obsrv)
                 return e.reward;
