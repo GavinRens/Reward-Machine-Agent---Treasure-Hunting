@@ -19,7 +19,7 @@ public class MCTS : Planner_Interface
         Nodes = new List<Node>();
         agent = _agent;
         rand = new System.Random();
-        A_list = new List<Action>(Agent.Actions);
+        A_list = new List<Action>(agent.Actions);
     }
     
     
@@ -33,13 +33,13 @@ public class MCTS : Planner_Interface
         public Dictionary<Action, Node> children;  // children[a] is the node reached via action a
         public rmNode activeRMNode;  // a reference to the reward machine node that should be active if this MCTS node is reached
         
-        public Node(State s, rmNode n)
+        public Node(State s, rmNode n, NMRDP_Agent agent)
         {
             state = s;
             activeRMNode = n;
             Q = new Dictionary<Action, float>();
             N = new Dictionary<Action, int>();
-            foreach (Action a in Agent.Actions)
+            foreach (Action a in agent.Actions)
             {
                 Q.Add(a, 0);
                 N.Add(a, 0);
@@ -57,7 +57,7 @@ public class MCTS : Planner_Interface
     {
         Action bestAction = Action.No_Op;
         float maxValue = -float.MaxValue;
-        foreach (Action a in Agent.Actions)
+        foreach (Action a in agent.Actions)
         {
             float val = n.Q[a] + System.MathF.Sqrt(2 * System.MathF.Log(n.Ns) / n.N[a]);
             if (val > maxValue)
@@ -90,10 +90,10 @@ public class MCTS : Planner_Interface
         Node nn;
         float futureValue;
 
-        if (!Agent.Actions.SetEquals(n.triedActs))  // some actions have not been tried at this node 
+        if (!agent.Actions.SetEquals(n.triedActs))  // some actions have not been tried at this node 
         {
             // Make temporary copy of all actions; a set
-            HashSet<Action> tmpA = new HashSet<Action>(Agent.Actions);
+            HashSet<Action> tmpA = new HashSet<Action>(agent.Actions);
             // Keep only actions not yet tried
             tmpA.ExceptWith(n.triedActs);
             // Cast untried action set into a list (amenable to indexing)
@@ -107,7 +107,7 @@ public class MCTS : Planner_Interface
             // Get reference to next active rmNode
             rmNode newActiveRMNode = agent.GetNextActiveRMNode(a, ss, n.activeRMNode);
             // Generate a new node
-            nn = new Node(ss, newActiveRMNode);
+            nn = new Node(ss, newActiveRMNode, agent);
             // Add it to the children of the current node
             n.children.Add(a, nn);
             // Do the rollout stage starting from the state rep'ed by the new node
@@ -143,7 +143,7 @@ public class MCTS : Planner_Interface
         int I = Parameters.I;
         int D = Parameters.maximumNuofActions; // larger D might be detrimental, because w/ long enough episodes, the goal can be reached no matter the first action
 
-        Node node = new Node(state, agent.RewardMachine.ActiveNode);
+        Node node = new Node(state, agent.RewardMachine.ActiveNode, agent);
 
         //nuof_nodes_gened = 0;
         int i = 0;
@@ -156,7 +156,7 @@ public class MCTS : Planner_Interface
         }
         Action bestAction = Action.No_Op;
         float maxValue = -float.MaxValue;
-        foreach (Action a in Agent.Actions)
+        foreach (Action a in agent.Actions)
         {
             if (node.Q[a] > maxValue)
             {
