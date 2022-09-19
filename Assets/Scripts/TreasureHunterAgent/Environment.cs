@@ -1,19 +1,6 @@
-using UnityEngine;
 
-
-public class Environment : MonoBehaviour
+public class Environment
 {
-    AgentController agentController;
-    TreasureHunter_NMRDP_Agent agent;
-
-    
-    void Start()
-    {
-        GameObject agentGO = GameObject.FindGameObjectWithTag("agent");
-        agent = agentGO.GetComponent<AgentController>().nmrdpAgent;
-    }
-
-
     /// <summary>
     /// The state the agent will end up in if it executes the action in the current state
     /// This is the `ground truth', not a model of what is expected <see cref="Agent.GetNextState(Action, State)"/>
